@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "../../ui/React/Modal";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
@@ -10,7 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
 import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
 import HistoryIcon from "@mui/icons-material/History";
-import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
 import { defaultTheme } from "../Themes";
@@ -44,26 +44,54 @@ function ColorEditor({ name, onColorChange, color, defaultColor }: IColorEditorP
         sx={{ mx: 1 }}
         label={name}
         value={color}
+        onChange={(ev) => onColorChange(name, ev.target.value)}
         InputProps={{
           startAdornment: (
-            <>
-              <ColorPicker
-                hideTextfield
-                deferred
-                value={color}
-                onChange={(newColor: Color) => onColorChange(name, "#" + newColor.hex)}
-                disableAlpha
-              />
-            </>
+            <Box
+              component="input"
+              sx={{
+                "-webkit-appearance": "none",
+                m: 1,
+                p: 0,
+                width: "24px",
+                height: "24px",
+                border: "none",
+                outline: "none",
+                borderRadius: "20%",
+                backgroundColor: "none",
+              }}
+              type="color"
+              value={color}
+              onChange={(e) => onColorChange(name, e.target.value)}
+              // style={{ width: "24px", height: "24px", padding: 0, margin: 0, border: "none" }}
+            />
           ),
           endAdornment: (
-            <>
-              <IconButton onClick={() => onColorChange(name, defaultColor)}>
-                <ReplyIcon color="primary" />
-              </IconButton>
-            </>
+            <IconButton onClick={() => onColorChange(name, defaultColor)}>
+              <ReplyIcon color="primary" />
+            </IconButton>
           ),
         }}
+        // InputProps={{
+        //   startAdornment: (
+        //     <>
+        //       <ColorPicker
+        //         hideTextfield
+        //         deferred
+        //         value={color}
+        //         onChange={(newColor: Color) => onColorChange(name, "#" + newColor.hex)}
+        //         disableAlpha
+        //       />
+        //     </>
+        //   ),
+        //   endAdornment: (
+        //     <>
+        //       <IconButton onClick={() => onColorChange(name, defaultColor)}>
+        //         <ReplyIcon color="primary" />
+        //       </IconButton>
+        //     </>
+        //   ),
+        // }}
       />
     </>
   );
